@@ -156,6 +156,7 @@ def generate_plot(station, run_hist = True, run_ssps = True, plot_ssps = True):
 
     plt.suptitle(f'Long-Term Aggregation of Streamflow at {name} ({station})', fontsize = 14)
     plt.savefig(os.path.join(folder, f'LTA_{station}_{colour_id}.png'))
+    print()
 
 
 # In[5]:
