@@ -44,7 +44,7 @@ def add_series(predf, path, station, stats, start, end, historic, iteration): #C
     return series
 
 
-# In[25]:
+# In[3]:
 
 
 def plot_series(run, period, series, config, ax, index, colour):
@@ -82,7 +82,7 @@ def plot_series(run, period, series, config, ax, index, colour):
     ax.grid(alpha = 0.5)
 
 
-# In[26]:
+# In[4]:
 
 
 def generate_plot(station, run_hist = True, run_ssps = True, plot_ssps = True):
@@ -91,7 +91,7 @@ def generate_plot(station, run_hist = True, run_ssps = True, plot_ssps = True):
               'Middle': 'median', 
               'Upper':  'q90'}
     stats = list(config.values())
-    folder, pathways = '../CanESM5', {}
+    folder, pathways = os.path.join(os.path.dirname(os.getcwd()), 'CanESM5'), {}
 
 
     
@@ -111,7 +111,7 @@ def generate_plot(station, run_hist = True, run_ssps = True, plot_ssps = True):
         # Check for scenario files in the folder
         file = [item for item in os.listdir(folder) if run in item][0]
         full_path = os.path.join(folder, file)
-        print(f'({runs.index(run) + 1}/4) Processing station {station} in {full_path.split('\\')[1]}' + ' ' * 20, end = '\r')
+        print(f'({runs.index(run) + 1}/4) Processing station {station} in {os.path.basename(full_path)}' + ' ' * 20, end = '\r')
 
         # Pre-reading each scenario file
         run_df = pd.read_csv(full_path, usecols = use_cols); run_df = run_df[use_cols]
@@ -155,10 +155,10 @@ def generate_plot(station, run_hist = True, run_ssps = True, plot_ssps = True):
         plots = [plot_series(run, period, entry[period], config, ax, axes.index(ax), colour) for period, colour in zip(periods, colours)]
 
     plt.suptitle(f'Long-Term Aggregation of Streamflow at {name} ({station})', fontsize = 14)
-    plt.savefig(f'{folder}\\LTA_{station}_{colour_id}.png')
+    plt.savefig(os.path.join(folder, f'LTA_{station}_{colour_id}.png'))
 
 
-# In[27]:
+# In[5]:
 
 
 if __name__ == '__main__':
